@@ -15,8 +15,8 @@
         .review-connector { stroke: #f59e0b; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead-orange); }
         .design-connector { stroke: #ec4899; stroke-width: 2; fill: none; marker-end: url(#arrowhead-pink); }
         .promo-connector { stroke: #10b981; stroke-width: 1.5; stroke-dasharray: 2; fill: none; marker-end: url(#arrowhead-green); }
+        .post-connector { stroke: #3b82f6; stroke-width: 1.5; stroke-dasharray: 3; fill: none; marker-end: url(#arrowhead-blue); }
         .label { font-size: 11px; font-weight: 600; fill: #1e293b; }
-    </defs>
     </style>
 </head>
 <body class="p-8">
@@ -24,7 +24,7 @@
         <h1 class="text-3xl font-bold text-slate-800 mb-2 text-center">Kiến trúc Hệ thống Website POD Hybrid</h1>
         <p class="text-slate-500 text-center mb-10">Mô hình Headless: Shopify + Next.js + Personalizer Engine (Teeinblue Style)</p>
 
-        <svg viewBox="0 0 1000 1150" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 1000 1250" xmlns="http://www.w3.org/2000/svg">
             <!-- Arrows Definition -->
             <defs>
                 <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
@@ -45,6 +45,9 @@
                 <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
                     <polygon points="0 0, 10 3.5, 0 7" fill="#10b981" />
                 </marker>
+                <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6" />
+                </marker>
                 <filter id="shadow">
                     <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.1"/>
                 </filter>
@@ -58,7 +61,7 @@
             <rect x="200" y="55" width="130" height="35" rx="8" fill="white" filter="url(#shadow)" class="box" />
             <text x="265" y="77" text-anchor="middle" font-size="9" class="label">Variant Manager</text>
 
-            <!-- SECTION: PROMOTIONS & MARKETING (NEW) -->
+            <!-- SECTION: PROMOTIONS & MARKETING -->
             <rect x="370" y="20" width="280" height="80" rx="15" fill="#f0fdf4" stroke="#10b981" stroke-width="2" />
             <text x="385" y="45" class="label" fill="#10b981">MARKETING & PROMOTIONS</text>
             <rect x="385" y="55" width="120" height="35" rx="8" fill="white" filter="url(#shadow)" class="box" />
@@ -117,7 +120,7 @@
             <path d="M170 470 L170 530" class="connector" />
             <path d="M390 470 L390 530" class="connector" />
 
-            <rect x="50" y="540" width="600" height="200" rx="15" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" />
+            <rect x="50" y="540" width="600" height="240" rx="15" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" />
             <text x="60" y="565" class="label" fill="#22c55e">SHOPIFY BACKEND ENGINE</text>
 
             <rect x="80" y="590" width="170" height="60" rx="8" fill="white" filter="url(#shadow)" />
@@ -130,44 +133,51 @@
             <rect x="460" y="590" width="170" height="60" rx="8" fill="#ecfdf5" stroke="#10b981" filter="url(#shadow)" />
             <text x="545" y="625" text-anchor="middle" class="label">Orders & Print Assets</text>
 
-            <rect x="80" y="670" width="550" height="50" rx="8" fill="#f8fafc" stroke="#cbd5e1" />
-            <text x="355" y="700" text-anchor="middle" class="label" fill="#64748b">Unified Data Sync (Marketing & Sales)</text>
+            <!-- SECTION: POST-PURCHASE & LOYALTY (NEW) -->
+            <rect x="80" y="670" width="550" height="90" rx="10" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1.5" />
+            <text x="95" y="690" class="label" fill="#0369a1">POST-PURCHASE & LOYALTY MODULE</text>
+            <rect x="95" y="700" width="160" height="40" rx="8" fill="white" filter="url(#shadow)" class="box" />
+            <text x="175" y="725" text-anchor="middle" font-size="9" class="label">Loyalty Points (Smile.io)</text>
+            <rect x="265" y="700" width="160" height="40" rx="8" fill="white" filter="url(#shadow)" class="box" />
+            <text x="345" y="725" text-anchor="middle" font-size="9" class="label">Post-Purchase Upsell</text>
+            <rect x="435" y="700" width="180" height="40" rx="8" fill="white" filter="url(#shadow)" class="box" />
+            <text x="525" y="725" text-anchor="middle" font-size="9" class="label">Referral Program</text>
 
             <!-- SECTION 3: POD FULFILLMENT -->
-            <path d="M355 740 L355 800" class="connector" />
+            <path d="M355 780 L355 840" class="connector" />
             
-            <rect x="50" y="810" width="850" height="120" rx="15" fill="#fff7ed" stroke="#f97316" stroke-width="2" />
-            <text x="60" y="835" class="label" fill="#f97316">POD FULFILLMENT PARTNER (Automated Sync)</text>
+            <rect x="50" y="850" width="850" height="120" rx="15" fill="#fff7ed" stroke="#f97316" stroke-width="2" />
+            <text x="60" y="875" class="label" fill="#f97316">POD FULFILLMENT PARTNER (Automated Sync)</text>
 
-            <rect x="100" y="855" width="300" height="50" rx="8" fill="white" filter="url(#shadow)" />
-            <text x="250" y="885" text-anchor="middle" class="label">Automatic Ingestion of Designs</text>
+            <rect x="100" y="895" width="300" height="50" rx="8" fill="white" filter="url(#shadow)" />
+            <text x="250" y="925" text-anchor="middle" class="label">Automatic Ingestion of Designs</text>
 
-            <rect x="550" y="855" width="300" height="50" rx="8" fill="white" filter="url(#shadow)" />
-            <text x="700" y="885" text-anchor="middle" class="label">Quality Check & Print</text>
+            <rect x="550" y="895" width="300" height="50" rx="8" fill="white" filter="url(#shadow)" />
+            <text x="700" y="925" text-anchor="middle" class="label">Quality Check & Print</text>
 
             <!-- FOOTER LEGEND -->
-            <rect x="50" y="950" width="850" height="60" rx="10" fill="#f1f5f9" />
-            <text x="70" y="985" font-size="11" fill="#475569">
-                <tspan font-weight="bold">Marketing & Promotions:</tspan> Module quản lý mã giảm giá, các chiến dịch Upsell (bán thêm sản phẩm liên quan) và Cross-sell ngay tại giỏ hàng để tối ưu doanh thu.
+            <rect x="50" y="1000" width="850" height="60" rx="10" fill="#f1f5f9" />
+            <text x="70" y="1035" font-size="11" fill="#475569">
+                <tspan font-weight="bold">Post-Purchase & Loyalty:</tspan> Module giúp tăng LTV (Giá trị vòng đời khách hàng). Sau khi mua, khách được tích điểm, gợi ý mua thêm ưu đãi và khuyến khích giới thiệu bạn bè.
             </text>
         </svg>
 
         <div class="mt-8 grid grid-cols-4 gap-4 text-xs">
-            <div class="p-3 bg-green-50 rounded-lg border border-green-100">
-                <h3 class="font-bold text-green-700 mb-1">Coupon Engine</h3>
-                <p class="text-green-600">Tạo mã giảm giá linh hoạt (theo %, số tiền cố định hoặc miễn phí vận chuyển) dựa trên điều kiện đơn hàng.</p>
-            </div>
-            <div class="p-3 bg-emerald-50 rounded-lg border border-emerald-100">
-                <h3 class="font-bold text-emerald-700 mb-1">In-Cart Upsell</h3>
-                <p class="text-emerald-600">Gợi ý khách hàng mua thêm các sản phẩm cùng bộ thiết kế ngay khi họ đang ở bước xem giỏ hàng.</p>
-            </div>
-            <div class="p-3 bg-yellow-50 rounded-lg border border-yellow-100">
-                <h3 class="font-bold text-yellow-700 mb-1">Social Proof Scarcity</h3>
-                <p class="text-yellow-700">Tích hợp Countdown Timer (đếm ngược) hoặc thông báo "Số lượng có hạn" để thúc đẩy mua hàng nhanh.</p>
-            </div>
             <div class="p-3 bg-blue-50 rounded-lg border border-blue-100">
-                <h3 class="font-bold text-blue-700 mb-1">Marketing Automation</h3>
-                <p class="text-blue-600">Kết nối với Klaviyo/Mailchimp để tự động gửi email nhắc nhở giỏ hàng bị bỏ quên (Abandoned Cart) kèm mã giảm giá.</p>
+                <h3 class="font-bold text-blue-700 mb-1">Loyalty Points</h3>
+                <p class="text-blue-600">Khách hàng tích điểm từ mỗi đơn hàng để đổi voucher cho lần mua sau, giúp họ quay lại cửa hàng nhiều hơn.</p>
+            </div>
+            <div class="p-3 bg-sky-50 rounded-lg border border-sky-100">
+                <h3 class="font-bold text-sky-700 mb-1">Post-Purchase Upsell</h3>
+                <p class="text-sky-600">Hiển thị ưu đãi "Mua thêm 1 cái nữa giảm 50%" ngay sau khi khách bấm thanh toán nhưng chưa rời khỏi trang.</p>
+            </div>
+            <div class="p-3 bg-indigo-50 rounded-lg border border-indigo-100">
+                <h3 class="font-bold text-indigo-700 mb-1">Referral System</h3>
+                <p class="text-indigo-600">Hệ thống "Tặng 5$ cho bạn và 5$ cho người giới thiệu", biến khách hàng thành cộng tác viên quảng cáo miễn phí.</p>
+            </div>
+            <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
+                <h3 class="font-bold text-slate-700 mb-1">Unified Data Sync</h3>
+                <p class="text-slate-600">Đồng bộ toàn bộ lịch sử mua hàng và điểm thưởng vào hồ sơ khách hàng (Customer Profile) trên hệ thống quản lý.</p>
             </div>
         </div>
     </div>
