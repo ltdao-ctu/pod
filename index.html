@@ -18,6 +18,52 @@
         .post-connector { stroke: #3b82f6; stroke-width: 1.5; stroke-dasharray: 3; fill: none; marker-end: url(#arrowhead-blue); }
         .ai-connector { stroke: #6366f1; stroke-width: 1.5; stroke-dasharray: 2; fill: none; marker-end: url(#arrowhead-indigo); }
         .label { font-size: 11px; font-weight: 600; fill: #1e293b; }
+		
+		header {
+            border-bottom: 3px solid #2c3e50;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+        }
+		
+		h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #2980b9;
+            border-left: 5px solid #2980b9;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        .intro {
+            font-style: italic;
+            color: #666;
+            font-size: 1.1em;
+        }
+        .module-section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .purpose {
+            font-weight: bold;
+            color: #e67e22;
+        }
+        .components-title {
+            font-weight: bold;
+            margin-top: 15px;
+            display: block;
+            text-decoration: underline;
+        }
+		
+		@layer base {
+			ul {
+				list-style-type: square;
+			}
+		}
+		
     </style>
 </head>
 <body class="p-8">
@@ -25,7 +71,7 @@
         <h1 class="text-3xl font-bold text-slate-800 mb-2 text-center">Hybrid POD Website Architecture</h1>
         <p class="text-slate-500 text-center mb-10">Headless Model: Shopify + Next.js + Personalizer Engine </p>
 
-        <svg viewBox="0 0 1000 1400" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 1000 1050" xmlns="http://www.w3.org/2000/svg">
             <!-- Arrows Definition -->
             <defs>
                 <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
@@ -183,37 +229,101 @@
             <rect x="550" y="915" width="300" height="50" rx="8" fill="white" filter="url(#shadow)" />
             <text x="700" y="945" text-anchor="middle" class="label">Quality Check & Print</text>
 
-            <!-- FOOTER LEGEND -->
-            <rect x="50" y="1020" width="850" height="100" rx="10" fill="#f1f5f9" />
-            <text x="70" y="1050" font-size="11" fill="#475569">
-                <tspan font-weight="bold">AI Enhancement Tools:</tspan> Integrated modules using APIs like Remove.bg or TensorFlow.js to automatically process customer images.
-            </text>
-            <text x="70" y="1075" font-size="11" fill="#475569">
-                - AI Bg Remover: Automatically removes backgrounds for portraits or pets uploaded by customers.
-            </text>
-            <text x="70" y="1100" font-size="11" fill="#475569">
-                - Face Detection: Automatically detects facial features to suggest optimal cropping, preventing accidental cut-offs.
-            </text>
+           
         </svg>
 
-        <div class="mt-8 grid grid-cols-4 gap-4 text-xs">
-            <div class="p-3 bg-indigo-50 rounded-lg border border-indigo-100">
-                <h3 class="font-bold text-indigo-700 mb-1">AI Background Removal</h3>
-                <p class="text-indigo-600">Uses APIs to remove backgrounds in 1s, ensuring designs blend perfectly with product colors.</p>
-            </div>
-            <div class="p-3 bg-blue-50 rounded-lg border border-blue-100">
-                <h3 class="font-bold text-blue-700 mb-1">Smart Face Detection</h3>
-                <p class="text-blue-600">Automatically detects facial features to suggest optimal cropping, preventing accidental cut-offs.</p>
-            </div>
-            <div class="p-3 bg-violet-50 rounded-lg border border-violet-100">
-                <h3 class="font-bold text-violet-700 mb-1">Image Upscaling</h3>
-                <p class="text-violet-700">Upscales low-quality customer photos using AI to ensure sharp print results (300 DPI).</p>
-            </div>
-            <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
-                <h3 class="font-bold text-slate-700 mb-1">UX Automation</h3>
-                <p class="text-slate-600">Reduces manual steps for customers, increasing the completion rate of designs and orders.</p>
-            </div>
-        </div>
+        <section class="module-section">
+            <h2>1. A/B Testing Layer</h2>
+            <p><span class="purpose">Purpose:</span> To optimize conversion rates by testing different user experiences.</p>
+            <span class="components-title">Core Components:</span>
+            <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+                <li><strong>Traffic Splitter:</strong> Distributes incoming traffic between different versions (A and B) of a page or feature.</li>
+                <li><strong>Variant Manager:</strong> Controls specific UI elements, such as different button colors, layouts, or pricing strategies, to determine which performs better.</li>
+            </ul>
+        </section>
+
+        <section class="module-section">
+            <h2>2. Marketing & Promotions</h2>
+            <p><span class="purpose">Purpose:</span> To drive sales through psychological triggers and financial incentives.</p>
+            <span class="components-title">Core Components:</span>
+            <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+                <li><strong>Coupon Engine:</strong> Manages dynamic and static discount codes that are applied at checkout.</li>
+                <li><strong>Upsell / Cross-sell:</strong> Suggests complementary products or upgrades (e.g., "Add a frame to your canvas") based on the current cart content.</li>
+            </ul>
+        </section>
+
+        <section class="module-section">
+            <h2>3. Product Personalizer Engine (Teeinblue Style)</h2>
+            <p><span class="purpose">Purpose:</span> The core USP of the store, allowing customers to co-create their products.</p>
+            <span class="components-title">Core Components:</span>
+            <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+                <li><strong>Live Preview Canvas:</strong> A real-time interactive area (built with Fabric.js/Konva.js) where users see their changes instantly on a product mockup.</li>
+                <li><strong>ClipArt & Font Library:</strong> A cloud-hosted repository of assets that users can choose from to decorate their designs.</li>
+                <li><strong>Print-Ready Generator:</strong> A server-side process that converts the user's browser-based JSON design into a high-resolution (300 DPI) PDF or PNG file for the printing machines.</li>
+            </ul>
+        </section>
+
+        <section class="module-section">
+            <h2>4. AI Enhancement Tools</h2>
+            <p><span class="purpose">Purpose:</span> To automate complex design tasks and improve the quality of customer-uploaded content.</p>
+            <span class="components-title">Core Components:</span>
+            <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+                <li><strong>AI Background Remover:</strong> Automatically strips backgrounds from user photos (e.g., removing the living room background from a pet photo).</li>
+                <li><strong>Face Detection:</strong> Ensures that faces are not cut off by the edges of the print area or obscured by other design elements.</li>
+                <li><strong>AI Resolution Upscaling:</strong> Uses neural networks to increase the pixel density of low-quality mobile photos, ensuring they don't look blurry when printed.</li>
+            </ul>
+        </section>
+
+        <section class="module-section">
+            <h2>5. Frontend Layer (Next.js)</h2>
+            <p><span class="purpose">Purpose:</span> Provides a high-performance, SEO-friendly user interface.</p>
+            <span class="components-title">Core Components:</span>
+            <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+                <li><strong>Customizer Interface:</strong> The React-based UI that wraps the Personalizer Engine, optimized for mobile touch gestures.</li>
+                <li><strong>Smart Cart:</strong> Handles complex metadata (like the design ID and personalization choices) before sending them to the Shopify checkout.</li>
+            </ul>
+        </section>
+
+        <section class="module-section">
+            <h2>6. Hybrid Tracking Layer</h2>
+            <p><span class="purpose">Purpose:</span> Ensures 100% data accuracy for marketing attribution despite ad-blockers.</p>
+            <span class="components-title">Core Components:</span>
+            <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+                <li><strong>Client-Side (GTM Web):</strong> Captures immediate user interactions like clicks and scrolls.</li>
+                <li><strong>Server-Side (CAPI):</strong> Sends purchase and lead data directly from the server to Facebook/Google, bypassing browser limitations and ITP (Intelligent Tracking Prevention).</li>
+            </ul>
+        </section>
+
+        <section class="module-section">
+            <h2>7. Shopify Backend Engine</h2>
+            <p><span class="purpose">Purpose:</span> Acts as the "Brain" for commerce logic and data persistence.</p>
+            <span class="components-title">Core Components:</span>
+            <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+                <li><strong>Storefront API:</strong> The GraphQL gateway that allows the Next.js frontend to fetch product data.</li>
+                <li><strong>Discount Logic:</strong> Validates and applies complex promotional rules.</li>
+                <li><strong>Orders & Print Assets:</strong> Stores the final order details and links the high-resolution print files to the specific order for the fulfillment team.</li>
+            </ul>
+        </section>
+
+        <section class="module-section">
+            <h2>8. Post-Purchase & Loyalty</h2>
+            <p><span class="purpose">Purpose:</span> To increase Customer Lifetime Value (LTV) and encourage repeat purchases.</p>
+            <span class="components-title">Core Components:</span>
+            <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+                <li><strong>Loyalty Points:</strong> Rewards users for purchases, referrals, or social media engagement.</li>
+                <li><strong>Referral Program:</strong> Incentivizes existing customers to bring in new buyers via unique trackable links.</li>
+            </ul>
+        </section>
+
+        <section class="module-section">
+            <h2>9. POD Fulfillment Partner</h2>
+            <p><span class="purpose">Purpose:</span> Physical production and global shipping.</p>
+            <span class="components-title">Core Components:</span>
+            <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+                <li><strong>Automatic Ingestion:</strong> Automatically pulls the "Print-Ready" file from your server as soon as an order is paid.</li>
+                <li><strong>Quality Check & Print:</strong> Final manual/automated inspection before the product is physically printed and shipped to the customer.</li>
+            </ul>
+        </section>
     </div>
 </body>
 </html>
