@@ -14,7 +14,9 @@
         .ab-connector { stroke: #06b6d4; stroke-width: 1.5; stroke-dasharray: 3; fill: none; marker-end: url(#arrowhead-cyan); }
         .review-connector { stroke: #f59e0b; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead-orange); }
         .design-connector { stroke: #ec4899; stroke-width: 2; fill: none; marker-end: url(#arrowhead-pink); }
+        .promo-connector { stroke: #10b981; stroke-width: 1.5; stroke-dasharray: 2; fill: none; marker-end: url(#arrowhead-green); }
         .label { font-size: 11px; font-weight: 600; fill: #1e293b; }
+    </defs>
     </style>
 </head>
 <body class="p-8">
@@ -22,7 +24,7 @@
         <h1 class="text-3xl font-bold text-slate-800 mb-2 text-center">Kiến trúc Hệ thống Website POD Hybrid</h1>
         <p class="text-slate-500 text-center mb-10">Mô hình Headless: Shopify + Next.js + Personalizer Engine (Teeinblue Style)</p>
 
-        <svg viewBox="0 0 1000 1050" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 1000 1150" xmlns="http://www.w3.org/2000/svg">
             <!-- Arrows Definition -->
             <defs>
                 <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
@@ -40,28 +42,39 @@
                 <marker id="arrowhead-pink" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
                     <polygon points="0 0, 10 3.5, 0 7" fill="#ec4899" />
                 </marker>
+                <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                    <polygon points="0 0, 10 3.5, 0 7" fill="#10b981" />
+                </marker>
                 <filter id="shadow">
                     <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.1"/>
                 </filter>
             </defs>
 
             <!-- SECTION: A/B TESTING ENGINE -->
-            <rect x="50" y="20" width="400" height="80" rx="15" fill="#ecfeff" stroke="#0891b2" stroke-width="2" />
+            <rect x="50" y="20" width="300" height="80" rx="15" fill="#ecfeff" stroke="#0891b2" stroke-width="2" />
             <text x="70" y="45" class="label" fill="#0891b2">A/B TESTING LAYER</text>
-            <rect x="80" y="35" width="160" height="50" rx="8" fill="white" filter="url(#shadow)" class="box" />
-            <text x="160" y="65" text-anchor="middle" class="label">Traffic Splitter</text>
-            <rect x="250" y="35" width="160" height="50" rx="8" fill="white" filter="url(#shadow)" class="box" />
-            <text x="330" y="65" text-anchor="middle" class="label">Variant Manager</text>
+            <rect x="70" y="55" width="120" height="35" rx="8" fill="white" filter="url(#shadow)" class="box" />
+            <text x="130" y="77" text-anchor="middle" font-size="9" class="label">Traffic Splitter</text>
+            <rect x="200" y="55" width="130" height="35" rx="8" fill="white" filter="url(#shadow)" class="box" />
+            <text x="265" y="77" text-anchor="middle" font-size="9" class="label">Variant Manager</text>
+
+            <!-- SECTION: PROMOTIONS & MARKETING (NEW) -->
+            <rect x="370" y="20" width="280" height="80" rx="15" fill="#f0fdf4" stroke="#10b981" stroke-width="2" />
+            <text x="385" y="45" class="label" fill="#10b981">MARKETING & PROMOTIONS</text>
+            <rect x="385" y="55" width="120" height="35" rx="8" fill="white" filter="url(#shadow)" class="box" />
+            <text x="445" y="77" text-anchor="middle" font-size="9" class="label">Coupon Engine</text>
+            <rect x="515" y="55" width="120" height="35" rx="8" fill="white" filter="url(#shadow)" class="box" />
+            <text x="575" y="77" text-anchor="middle" font-size="9" class="label">Upsell / Cross-sell</text>
 
             <!-- SECTION: REVIEW & SOCIAL PROOF -->
-            <rect x="680" y="20" width="220" height="180" rx="15" fill="#fffbeb" stroke="#f59e0b" stroke-width="2" />
+            <rect x="680" y="20" width="220" height="150" rx="15" fill="#fffbeb" stroke="#f59e0b" stroke-width="2" />
             <text x="695" y="45" class="label" fill="#f59e0b">REVIEWS & SOCIAL PROOF</text>
-            <rect x="700" y="65" width="180" height="50" rx="8" fill="white" filter="url(#shadow)" class="box" />
-            <text x="790" y="95" text-anchor="middle" class="label">Review Widget</text>
-            <rect x="700" y="130" width="180" height="50" rx="8" fill="white" filter="url(#shadow)" class="box" />
-            <text x="790" y="160" text-anchor="middle" class="label">Photo/Video UGC</text>
+            <rect x="700" y="60" width="180" height="40" rx="8" fill="white" filter="url(#shadow)" class="box" />
+            <text x="790" y="85" text-anchor="middle" class="label">Review Widget</text>
+            <rect x="700" y="110" width="180" height="40" rx="8" fill="white" filter="url(#shadow)" class="box" />
+            <text x="790" y="135" text-anchor="middle" class="label">Photo/Video UGC</text>
 
-            <!-- SECTION: PRODUCT PERSONALIZER (NEW - Teeinblue style) -->
+            <!-- SECTION: PRODUCT PERSONALIZER -->
             <rect x="50" y="140" width="600" height="120" rx="15" fill="#fdf2f8" stroke="#db2777" stroke-width="2" />
             <text x="70" y="165" class="label" fill="#db2777">PRODUCT PERSONALIZER ENGINE (Teeinblue Style)</text>
             
@@ -78,83 +91,83 @@
             <text x="530" y="225" text-anchor="middle" font-size="8" fill="#9d174d">(300 DPI PDF/PNG)</text>
 
             <!-- SECTION 1: FRONTEND LAYER -->
-            <rect x="50" y="300" width="600" height="150" rx="15" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" stroke-dasharray="5,5" />
-            <text x="60" y="325" class="label" fill="#3b82f6">FRONTEND LAYER (Next.js)</text>
+            <rect x="50" y="320" width="600" height="150" rx="15" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" stroke-dasharray="5,5" />
+            <text x="60" y="345" class="label" fill="#3b82f6">FRONTEND LAYER (Next.js)</text>
             
-            <rect x="80" y="350" width="180" height="70" rx="10" fill="white" filter="url(#shadow)" class="box" />
-            <text x="170" y="380" text-anchor="middle" class="label">Customizer Interface</text>
-            <text x="170" y="400" text-anchor="middle" font-size="9" fill="#64748b">(User Controls)</text>
+            <rect x="80" y="370" width="180" height="70" rx="10" fill="white" filter="url(#shadow)" class="box" />
+            <text x="170" y="400" text-anchor="middle" class="label">Customizer Interface</text>
+            <text x="170" y="420" text-anchor="middle" font-size="9" fill="#64748b">(Promo Banners Display)</text>
 
-            <rect x="300" y="350" width="180" height="70" rx="10" fill="white" filter="url(#shadow)" class="box" />
-            <text x="390" y="380" text-anchor="middle" class="label">Design Add-to-Cart</text>
-            <text x="390" y="400" text-anchor="middle" font-size="9" fill="#64748b">(Saves Design Metadata)</text>
+            <rect x="300" y="370" width="180" height="70" rx="10" fill="white" filter="url(#shadow)" class="box" />
+            <text x="390" y="400" text-anchor="middle" class="label">Smart Cart</text>
+            <text x="390" y="420" text-anchor="middle" font-size="9" fill="#64748b">(Dynamic Upsells)</text>
 
             <!-- SECTION: TRACKING LAYER -->
-            <rect x="720" y="300" width="180" height="420" rx="15" fill="#faf5ff" stroke="#a855f7" stroke-width="2" />
-            <text x="730" y="325" class="label" fill="#a855f7">TRACKING LAYER</text>
-            <rect x="740" y="350" width="140" height="60" rx="8" fill="white" filter="url(#shadow)" class="box" />
-            <text x="810" y="385" text-anchor="middle" class="label">CAPI / Analytics</text>
+            <rect x="720" y="320" width="180" height="420" rx="15" fill="#faf5ff" stroke="#a855f7" stroke-width="2" />
+            <text x="730" y="345" class="label" fill="#a855f7">TRACKING LAYER</text>
+            <rect x="740" y="370" width="140" height="60" rx="8" fill="white" filter="url(#shadow)" class="box" />
+            <text x="810" y="405" text-anchor="middle" class="label">CAPI / Analytics</text>
 
             <!-- Connections -->
-            <path d="M340 260 L340 300" class="design-connector" />
-            <path d="M530 240 L680 500" class="design-connector" stroke-dasharray="4" />
-            <text x="600" y="480" font-size="10" fill="#db2777" font-weight="bold">High-Res Print File</text>
+            <path d="M510 100 L510 320" class="promo-connector" />
+            <path d="M340 260 L340 320" class="design-connector" />
+            <path d="M530 260 L680 520" class="design-connector" stroke-dasharray="4" />
 
             <!-- SECTION 2: BACKEND ENGINE -->
-            <path d="M170 450 L170 510" class="connector" />
-            <path d="M390 450 L390 510" class="connector" />
+            <path d="M170 470 L170 530" class="connector" />
+            <path d="M390 470 L390 530" class="connector" />
 
-            <rect x="50" y="520" width="600" height="200" rx="15" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" />
-            <text x="60" y="545" class="label" fill="#22c55e">SHOPIFY BACKEND ENGINE</text>
+            <rect x="50" y="540" width="600" height="200" rx="15" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" />
+            <text x="60" y="565" class="label" fill="#22c55e">SHOPIFY BACKEND ENGINE</text>
 
-            <rect x="80" y="570" width="170" height="60" rx="8" fill="white" filter="url(#shadow)" />
-            <text x="165" y="605" text-anchor="middle" class="label">Storefront API</text>
+            <rect x="80" y="590" width="170" height="60" rx="8" fill="white" filter="url(#shadow)" />
+            <text x="165" y="625" text-anchor="middle" class="label">Storefront API</text>
             
-            <rect x="270" y="570" width="170" height="60" rx="8" fill="white" filter="url(#shadow)" />
-            <text x="355" y="595" text-anchor="middle" class="label">Campaign Mgmt</text>
-            <text x="355" y="615" text-anchor="middle" font-size="9" fill="#15803d">(Personalization Rules)</text>
+            <rect x="270" y="590" width="170" height="60" rx="8" fill="white" filter="url(#shadow)" />
+            <text x="355" y="615" text-anchor="middle" class="label">Discount Logic</text>
+            <text x="355" y="635" text-anchor="middle" font-size="9" fill="#15803d">(Buy X Get Y / Bundles)</text>
 
-            <rect x="460" y="570" width="170" height="60" rx="8" fill="#ecfdf5" stroke="#10b981" filter="url(#shadow)" />
-            <text x="545" y="605" text-anchor="middle" class="label">Orders & Print Assets</text>
+            <rect x="460" y="590" width="170" height="60" rx="8" fill="#ecfdf5" stroke="#10b981" filter="url(#shadow)" />
+            <text x="545" y="625" text-anchor="middle" class="label">Orders & Print Assets</text>
 
-            <rect x="80" y="650" width="550" height="50" rx="8" fill="#f8fafc" stroke="#cbd5e1" />
-            <text x="355" y="680" text-anchor="middle" class="label" fill="#64748b">Unified Data Sync (Design & Order)</text>
+            <rect x="80" y="670" width="550" height="50" rx="8" fill="#f8fafc" stroke="#cbd5e1" />
+            <text x="355" y="700" text-anchor="middle" class="label" fill="#64748b">Unified Data Sync (Marketing & Sales)</text>
 
             <!-- SECTION 3: POD FULFILLMENT -->
-            <path d="M355 720 L355 780" class="connector" />
+            <path d="M355 740 L355 800" class="connector" />
             
-            <rect x="50" y="790" width="850" height="120" rx="15" fill="#fff7ed" stroke="#f97316" stroke-width="2" />
-            <text x="60" y="815" class="label" fill="#f97316">POD FULFILLMENT PARTNER (Automated Sync)</text>
+            <rect x="50" y="810" width="850" height="120" rx="15" fill="#fff7ed" stroke="#f97316" stroke-width="2" />
+            <text x="60" y="835" class="label" fill="#f97316">POD FULFILLMENT PARTNER (Automated Sync)</text>
 
-            <rect x="100" y="835" width="300" height="50" rx="8" fill="white" filter="url(#shadow)" />
-            <text x="250" y="865" text-anchor="middle" class="label">Automatic Ingestion of Designs</text>
+            <rect x="100" y="855" width="300" height="50" rx="8" fill="white" filter="url(#shadow)" />
+            <text x="250" y="885" text-anchor="middle" class="label">Automatic Ingestion of Designs</text>
 
-            <rect x="550" y="835" width="300" height="50" rx="8" fill="white" filter="url(#shadow)" />
-            <text x="700" y="865" text-anchor="middle" class="label">Quality Check & Print</text>
+            <rect x="550" y="855" width="300" height="50" rx="8" fill="white" filter="url(#shadow)" />
+            <text x="700" y="885" text-anchor="middle" class="label">Quality Check & Print</text>
 
             <!-- FOOTER LEGEND -->
-            <rect x="50" y="930" width="850" height="60" rx="10" fill="#f1f5f9" />
-            <text x="70" y="965" font-size="11" fill="#475569">
-                <tspan font-weight="bold">Product Personalizer:</tspan> Module này cho phép khách hàng tự thiết kế (Teeinblue style). Hệ thống tự động render file in (Print-ready) dung lượng cao để đẩy sang nhà in mà không cần xử lý thủ công.
+            <rect x="50" y="950" width="850" height="60" rx="10" fill="#f1f5f9" />
+            <text x="70" y="985" font-size="11" fill="#475569">
+                <tspan font-weight="bold">Marketing & Promotions:</tspan> Module quản lý mã giảm giá, các chiến dịch Upsell (bán thêm sản phẩm liên quan) và Cross-sell ngay tại giỏ hàng để tối ưu doanh thu.
             </text>
         </svg>
 
         <div class="mt-8 grid grid-cols-4 gap-4 text-xs">
-            <div class="p-3 bg-pink-50 rounded-lg border border-pink-100">
-                <h3 class="font-bold text-pink-700 mb-1">Live Preview</h3>
-                <p class="text-pink-600">Khách hàng thấy ngay thay đổi (tên, ảnh, màu) trên Mockup thực tế khi họ đang thao tác tùy chỉnh.</p>
+            <div class="p-3 bg-green-50 rounded-lg border border-green-100">
+                <h3 class="font-bold text-green-700 mb-1">Coupon Engine</h3>
+                <p class="text-green-600">Tạo mã giảm giá linh hoạt (theo %, số tiền cố định hoặc miễn phí vận chuyển) dựa trên điều kiện đơn hàng.</p>
+            </div>
+            <div class="p-3 bg-emerald-50 rounded-lg border border-emerald-100">
+                <h3 class="font-bold text-emerald-700 mb-1">In-Cart Upsell</h3>
+                <p class="text-emerald-600">Gợi ý khách hàng mua thêm các sản phẩm cùng bộ thiết kế ngay khi họ đang ở bước xem giỏ hàng.</p>
+            </div>
+            <div class="p-3 bg-yellow-50 rounded-lg border border-yellow-100">
+                <h3 class="font-bold text-yellow-700 mb-1">Social Proof Scarcity</h3>
+                <p class="text-yellow-700">Tích hợp Countdown Timer (đếm ngược) hoặc thông báo "Số lượng có hạn" để thúc đẩy mua hàng nhanh.</p>
             </div>
             <div class="p-3 bg-blue-50 rounded-lg border border-blue-100">
-                <h3 class="font-bold text-blue-700 mb-1">Asset Library</h3>
-                <p class="text-blue-600">Quản lý thư viện mẫu (Clipart), Font chữ và các tùy chọn cá nhân hóa theo từng chiến dịch (Campaign).</p>
-            </div>
-            <div class="p-3 bg-green-50 rounded-lg border border-green-100">
-                <h3 class="font-bold text-green-700 mb-1">Print-Ready Output</h3>
-                <p class="text-green-600">Tự động xuất file in (300 DPI) sau khi đơn hàng thanh toán thành công, loại bỏ sai sót thiết kế.</p>
-            </div>
-            <div class="p-3 bg-orange-50 rounded-lg border border-orange-100">
-                <h3 class="font-bold text-orange-700 mb-1">Automated Workflow</h3>
-                <p class="text-orange-600">Đơn hàng kèm Link thiết kế được đẩy thẳng vào dây chuyền sản xuất của nhà in (Printful/Printify).</p>
+                <h3 class="font-bold text-blue-700 mb-1">Marketing Automation</h3>
+                <p class="text-blue-600">Kết nối với Klaviyo/Mailchimp để tự động gửi email nhắc nhở giỏ hàng bị bỏ quên (Abandoned Cart) kèm mã giảm giá.</p>
             </div>
         </div>
     </div>
