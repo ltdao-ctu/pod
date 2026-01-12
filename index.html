@@ -24,7 +24,7 @@
         <h1 class="text-3xl font-bold text-slate-800 mb-2 text-center">Kiến trúc Hệ thống Website POD Hybrid</h1>
         <p class="text-slate-500 text-center mb-10">Mô hình Headless: Shopify + Next.js + Personalizer Engine (Teeinblue Style)</p>
 
-        <svg viewBox="0 0 1000 1250" xmlns="http://www.w3.org/2000/svg">
+        <svg viewBox="0 0 1000 1300" xmlns="http://www.w3.org/2000/svg">
             <!-- Arrows Definition -->
             <defs>
                 <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
@@ -105,16 +105,39 @@
             <text x="390" y="400" text-anchor="middle" class="label">Smart Cart</text>
             <text x="390" y="420" text-anchor="middle" font-size="9" fill="#64748b">(Dynamic Upsells)</text>
 
-            <!-- SECTION: TRACKING LAYER -->
-            <rect x="720" y="320" width="180" height="420" rx="15" fill="#faf5ff" stroke="#a855f7" stroke-width="2" />
-            <text x="730" y="345" class="label" fill="#a855f7">TRACKING LAYER</text>
-            <rect x="740" y="370" width="140" height="60" rx="8" fill="white" filter="url(#shadow)" class="box" />
-            <text x="810" y="405" text-anchor="middle" class="label">CAPI / Analytics</text>
+            <!-- SECTION: ADVANCED TRACKING LAYER (UPDATED) -->
+            <rect x="680" y="320" width="280" height="420" rx="15" fill="#faf5ff" stroke="#a855f7" stroke-width="2" />
+            <text x="695" y="345" class="label" fill="#a855f7">HYBRID TRACKING LAYER</text>
+            
+            <!-- Client Side Sub-section -->
+            <rect x="695" y="365" width="250" height="120" rx="10" fill="white" stroke="#c084fc" stroke-dasharray="3" />
+            <text x="705" y="385" font-size="9" font-weight="bold" fill="#7e22ce">1. CLIENT-SIDE (Browser)</text>
+            <rect x="705" y="395" width="230" height="35" rx="5" fill="#f5f3ff" />
+            <text x="820" y="417" text-anchor="middle" font-size="9" class="label">GTM Web Container</text>
+            <rect x="705" y="440" width="230" height="35" rx="5" fill="#f5f3ff" />
+            <text x="820" y="462" text-anchor="middle" font-size="9" class="label">FB Pixel / GA4 Tag</text>
+
+            <!-- Server Side Sub-section -->
+            <rect x="695" y="500" width="250" height="220" rx="10" fill="#fdfaff" stroke="#a855f7" />
+            <text x="705" y="520" font-size="9" font-weight="bold" fill="#7e22ce">2. SERVER-SIDE (CAPI)</text>
+            <rect x="705" y="535" width="230" height="45" rx="5" fill="white" filter="url(#shadow)" />
+            <text x="820" y="555" text-anchor="middle" font-size="9" class="label">GTM Server Container</text>
+            <text x="820" y="568" text-anchor="middle" font-size="8" fill="#a855f7">(Custom Domain)</text>
+            
+            <rect x="705" y="595" width="230" height="45" rx="5" fill="white" filter="url(#shadow)" />
+            <text x="820" y="615" text-anchor="middle" font-size="9" class="label">Facebook CAPI</text>
+            <text x="820" y="628" text-anchor="middle" font-size="8" fill="#a855f7">(Server-to-Server)</text>
+
+            <rect x="705" y="655" width="230" height="45" rx="5" fill="white" filter="url(#shadow)" />
+            <text x="820" y="675" text-anchor="middle" font-size="9" class="label">Mixpanel / Data Warehouse</text>
+            <text x="820" y="688" text-anchor="middle" font-size="8" fill="#a855f7">(User Journey Analysis)</text>
 
             <!-- Connections -->
             <path d="M510 100 L510 320" class="promo-connector" />
             <path d="M340 260 L340 320" class="design-connector" />
             <path d="M530 260 L680 520" class="design-connector" stroke-dasharray="4" />
+            <path d="M600 400 L695 400" class="tracking-connector" />
+            <path d="M600 620 L695 620" class="tracking-connector" />
 
             <!-- SECTION 2: BACKEND ENGINE -->
             <path d="M170 470 L170 530" class="connector" />
@@ -133,7 +156,7 @@
             <rect x="460" y="590" width="170" height="60" rx="8" fill="#ecfdf5" stroke="#10b981" filter="url(#shadow)" />
             <text x="545" y="625" text-anchor="middle" class="label">Orders & Print Assets</text>
 
-            <!-- SECTION: POST-PURCHASE & LOYALTY (NEW) -->
+            <!-- SECTION: POST-PURCHASE & LOYALTY -->
             <rect x="80" y="670" width="550" height="90" rx="10" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1.5" />
             <text x="95" y="690" class="label" fill="#0369a1">POST-PURCHASE & LOYALTY MODULE</text>
             <rect x="95" y="700" width="160" height="40" rx="8" fill="white" filter="url(#shadow)" class="box" />
@@ -156,28 +179,34 @@
             <text x="700" y="925" text-anchor="middle" class="label">Quality Check & Print</text>
 
             <!-- FOOTER LEGEND -->
-            <rect x="50" y="1000" width="850" height="60" rx="10" fill="#f1f5f9" />
-            <text x="70" y="1035" font-size="11" fill="#475569">
-                <tspan font-weight="bold">Post-Purchase & Loyalty:</tspan> Module giúp tăng LTV (Giá trị vòng đời khách hàng). Sau khi mua, khách được tích điểm, gợi ý mua thêm ưu đãi và khuyến khích giới thiệu bạn bè.
+            <rect x="50" y="1000" width="850" height="100" rx="10" fill="#f1f5f9" />
+            <text x="70" y="1030" font-size="11" fill="#475569">
+                <tspan font-weight="bold">Hybrid Tracking Layer:</tspan> Kết hợp giữa Tracking truyền thống trên trình duyệt và Server-to-Server. 
+            </text>
+            <text x="70" y="1055" font-size="11" fill="#475569">
+                - Giúp dữ liệu chính xác 100% bất kể AdBlock hay iOS 14+.
+            </text>
+            <text x="70" y="1080" font-size="11" fill="#475569">
+                - GTM Server-side sử dụng Custom Domain để tránh bị trình duyệt chặn, giúp tối ưu chi phí quảng cáo và Scale nhanh.
             </text>
         </svg>
 
         <div class="mt-8 grid grid-cols-4 gap-4 text-xs">
-            <div class="p-3 bg-blue-50 rounded-lg border border-blue-100">
-                <h3 class="font-bold text-blue-700 mb-1">Loyalty Points</h3>
-                <p class="text-blue-600">Khách hàng tích điểm từ mỗi đơn hàng để đổi voucher cho lần mua sau, giúp họ quay lại cửa hàng nhiều hơn.</p>
+            <div class="p-3 bg-purple-50 rounded-lg border border-purple-100">
+                <h3 class="font-bold text-purple-700 mb-1">GTM Server-side</h3>
+                <p class="text-purple-600">Đóng vai trò "Proxy" bảo mật, xử lý dữ liệu nhạy cảm trước khi gửi đi, giúp tăng tốc độ website.</p>
             </div>
-            <div class="p-3 bg-sky-50 rounded-lg border border-sky-100">
-                <h3 class="font-bold text-sky-700 mb-1">Post-Purchase Upsell</h3>
-                <p class="text-sky-600">Hiển thị ưu đãi "Mua thêm 1 cái nữa giảm 50%" ngay sau khi khách bấm thanh toán nhưng chưa rời khỏi trang.</p>
+            <div class="p-3 bg-fuchsia-50 rounded-lg border border-fuchsia-100">
+                <h3 class="font-bold text-fuchsia-700 mb-1">Facebook CAPI</h3>
+                <p class="text-fuchsia-600">Gửi sự kiện Purchase trực tiếp từ Shopify Backend đến Facebook, loại bỏ hoàn toàn sai lệch dữ liệu đơn hàng.</p>
             </div>
             <div class="p-3 bg-indigo-50 rounded-lg border border-indigo-100">
-                <h3 class="font-bold text-indigo-700 mb-1">Referral System</h3>
-                <p class="text-indigo-600">Hệ thống "Tặng 5$ cho bạn và 5$ cho người giới thiệu", biến khách hàng thành cộng tác viên quảng cáo miễn phí.</p>
+                <h3 class="font-bold text-indigo-700 mb-1">Mixpanel Analytics</h3>
+                <p class="text-indigo-600">Theo dõi chi tiết các tương tác trong khối Personalizer để hiểu khách hàng thích tùy chỉnh những gì nhất.</p>
             </div>
             <div class="p-3 bg-slate-50 rounded-lg border border-slate-100">
-                <h3 class="font-bold text-slate-700 mb-1">Unified Data Sync</h3>
-                <p class="text-slate-600">Đồng bộ toàn bộ lịch sử mua hàng và điểm thưởng vào hồ sơ khách hàng (Customer Profile) trên hệ thống quản lý.</p>
+                <h3 class="font-bold text-slate-700 mb-1">Attribution Modeling</h3>
+                <p class="text-slate-600">Dữ liệu hợp nhất giúp đánh giá chính xác nguồn traffic nào mang lại lợi nhuận thực tế (ROI) cao nhất.</p>
             </div>
         </div>
     </div>
