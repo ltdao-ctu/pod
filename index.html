@@ -1,329 +1,1063 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hybrid POD System Architecture (Headless Shopify)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .box { border-radius: 12px; transition: all 0.3s ease; }
-        .box:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
-        .connector { stroke: #64748b; stroke-width: 2; fill: none; marker-end: url(#arrowhead); }
-        .tracking-connector { stroke: #a855f7; stroke-width: 1.5; stroke-dasharray: 4; fill: none; marker-end: url(#arrowhead-purple); }
-        .ab-connector { stroke: #06b6d4; stroke-width: 1.5; stroke-dasharray: 3; fill: none; marker-end: url(#arrowhead-cyan); }
-        .review-connector { stroke: #f59e0b; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead-orange); }
-        .design-connector { stroke: #ec4899; stroke-width: 2; fill: none; marker-end: url(#arrowhead-pink); }
-        .promo-connector { stroke: #10b981; stroke-width: 1.5; stroke-dasharray: 2; fill: none; marker-end: url(#arrowhead-green); }
-        .post-connector { stroke: #3b82f6; stroke-width: 1.5; stroke-dasharray: 3; fill: none; marker-end: url(#arrowhead-blue); }
-        .ai-connector { stroke: #6366f1; stroke-width: 1.5; stroke-dasharray: 2; fill: none; marker-end: url(#arrowhead-indigo); }
-        .label { font-size: 11px; font-weight: 600; fill: #1e293b; }
-		
-		header {
-            border-bottom: 3px solid #2c3e50;
-            margin-bottom: 30px;
-            padding-bottom: 10px;
+      body {
+        background-color: #f8fafc;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .box {
+        border-radius: 12px;
+      }
+      .connector {
+        stroke: #64748b;
+        stroke-width: 2;
+        fill: none;
+        marker-end: url(#arrowhead);
+      }
+      .tracking-connector {
+        stroke: #a855f7;
+        stroke-width: 1.5;
+        stroke-dasharray: 4;
+        fill: none;
+        marker-end: url(#arrowhead-purple);
+      }
+      .ab-connector {
+        stroke: #06b6d4;
+        stroke-width: 1.5;
+        stroke-dasharray: 3;
+        fill: none;
+        marker-end: url(#arrowhead-cyan);
+      }
+      .review-connector {
+        stroke: #f59e0b;
+        stroke-width: 1.5;
+        fill: none;
+        marker-end: url(#arrowhead-orange);
+      }
+      .design-connector {
+        stroke: #ec4899;
+        stroke-width: 2;
+        fill: none;
+        marker-end: url(#arrowhead-pink);
+      }
+      .promo-connector {
+        stroke: #10b981;
+        stroke-width: 1.5;
+        stroke-dasharray: 2;
+        fill: none;
+        marker-end: url(#arrowhead-green);
+      }
+      .post-connector {
+        stroke: #3b82f6;
+        stroke-width: 1.5;
+        stroke-dasharray: 3;
+        fill: none;
+        marker-end: url(#arrowhead-blue);
+      }
+      .ai-connector {
+        stroke: #6366f1;
+        stroke-width: 1.5;
+        stroke-dasharray: 2;
+        fill: none;
+        marker-end: url(#arrowhead-indigo);
+      }
+      .label {
+        font-size: 11px;
+        font-weight: 600;
+        fill: #1e293b;
+      }
+      .label-sm {
+        font-size: 10px;
+        font-weight: 600;
+        fill: #1e293b;
+      }
+      .subtitle {
+        font-size: 9px;
+        fill: #6b7280;
+      }
+
+      header {
+        border-bottom: 3px solid #2c3e50;
+        margin-bottom: 30px;
+        padding-bottom: 10px;
+      }
+
+      h1 {
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+      h2 {
+        color: #2980b9;
+        border-left: 5px solid #2980b9;
+        padding-left: 15px;
+        margin-top: 30px;
+      }
+      .intro {
+        font-style: italic;
+        color: #666;
+        font-size: 1.1em;
+      }
+      .module-section {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+      .purpose {
+        font-weight: bold;
+        color: #e67e22;
+      }
+      .components-title {
+        font-weight: bold;
+        margin-top: 15px;
+        display: block;
+        text-decoration: underline;
+      }
+
+      @layer base {
+        ul {
+          list-style-type: square;
         }
-		
-		h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-        }
-        h2 {
-            color: #2980b9;
-            border-left: 5px solid #2980b9;
-            padding-left: 15px;
-            margin-top: 30px;
-        }
-        .intro {
-            font-style: italic;
-            color: #666;
-            font-size: 1.1em;
-        }
-        .module-section {
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        .purpose {
-            font-weight: bold;
-            color: #e67e22;
-        }
-        .components-title {
-            font-weight: bold;
-            margin-top: 15px;
-            display: block;
-            text-decoration: underline;
-        }
-		
-		@layer base {
-			ul {
-				list-style-type: square;
-			}
-		}
-		
+      }
     </style>
-</head>
-<body class="p-8">
-    <div class="max-w-6xl mx-auto bg-white p-10 rounded-2xl shadow-xl border border-slate-200">
-        <h1 class="text-3xl font-bold text-slate-800 mb-2 text-center">Hybrid POD Website Architecture</h1>
-        <p class="text-slate-500 text-center mb-10">Headless Model: Shopify + Next.js + Personalizer Engine </p>
+  </head>
+  <body class="p-8">
+    <div
+      class="max-w-6xl mx-auto bg-white p-10 rounded-2xl shadow-xl border border-slate-200"
+    >
+      <h1 class="text-3xl font-bold text-slate-800 mb-2 text-center">
+        Hybrid POD Website Architecture
+      </h1>
+      <p class="text-slate-500 text-center mb-10">
+        Headless Model: Shopify + Next.js + Personalizer Engine
+      </p>
 
-        <svg viewBox="0 0 1000 1050" xmlns="http://www.w3.org/2000/svg">
-            <!-- Arrows Definition -->
-            <defs>
-                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" fill="#64748b" />
-                </marker>
-                <marker id="arrowhead-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" fill="#a855f7" />
-                </marker>
-                <marker id="arrowhead-cyan" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" fill="#06b6d4" />
-                </marker>
-                <marker id="arrowhead-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" fill="#f59e0b" />
-                </marker>
-                <marker id="arrowhead-pink" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" fill="#ec4899" />
-                </marker>
-                <marker id="arrowhead-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" fill="#10b981" />
-                </marker>
-                <marker id="arrowhead-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6" />
-                </marker>
-                <marker id="arrowhead-indigo" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
-                    <polygon points="0 0, 10 3.5, 0 7" fill="#6366f1" />
-                </marker>
-                <filter id="shadow">
-                    <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.1"/>
-                </filter>
-            </defs>
+      <svg viewBox="0 0 1000 1200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Arrows Definition -->
+        <defs>
+          <marker
+            id="arrowhead"
+            markerWidth="10"
+            markerHeight="7"
+            refX="9"
+            refY="3.5"
+            orient="auto"
+          >
+            <polygon points="0 0, 10 3.5, 0 7" fill="#64748b" />
+          </marker>
+          <marker
+            id="arrowhead-purple"
+            markerWidth="10"
+            markerHeight="7"
+            refX="9"
+            refY="3.5"
+            orient="auto"
+          >
+            <polygon points="0 0, 10 3.5, 0 7" fill="#a855f7" />
+          </marker>
+          <marker
+            id="arrowhead-cyan"
+            markerWidth="10"
+            markerHeight="7"
+            refX="9"
+            refY="3.5"
+            orient="auto"
+          >
+            <polygon points="0 0, 10 3.5, 0 7" fill="#06b6d4" />
+          </marker>
+          <marker
+            id="arrowhead-orange"
+            markerWidth="10"
+            markerHeight="7"
+            refX="9"
+            refY="3.5"
+            orient="auto"
+          >
+            <polygon points="0 0, 10 3.5, 0 7" fill="#f59e0b" />
+          </marker>
+          <marker
+            id="arrowhead-pink"
+            markerWidth="10"
+            markerHeight="7"
+            refX="9"
+            refY="3.5"
+            orient="auto"
+          >
+            <polygon points="0 0, 10 3.5, 0 7" fill="#ec4899" />
+          </marker>
+          <marker
+            id="arrowhead-green"
+            markerWidth="10"
+            markerHeight="7"
+            refX="9"
+            refY="3.5"
+            orient="auto"
+          >
+            <polygon points="0 0, 10 3.5, 0 7" fill="#10b981" />
+          </marker>
+          <marker
+            id="arrowhead-blue"
+            markerWidth="10"
+            markerHeight="7"
+            refX="9"
+            refY="3.5"
+            orient="auto"
+          >
+            <polygon points="0 0, 10 3.5, 0 7" fill="#3b82f6" />
+          </marker>
+          <marker
+            id="arrowhead-indigo"
+            markerWidth="10"
+            markerHeight="7"
+            refX="9"
+            refY="3.5"
+            orient="auto"
+          >
+            <polygon points="0 0, 10 3.5, 0 7" fill="#6366f1" />
+          </marker>
+          <filter id="shadow">
+            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.1" />
+          </filter>
+        </defs>
 
-            <!-- SECTION: A/B TESTING ENGINE -->
-            <rect x="50" y="20" width="300" height="80" rx="15" fill="#ecfeff" stroke="#0891b2" stroke-width="2" />
-            <text x="70" y="45" class="label" fill="#0891b2">A/B TESTING LAYER</text>
-            <rect x="70" y="55" width="120" height="35" rx="8" fill="white" filter="url(#shadow)" class="box" />
-            <text x="130" y="77" text-anchor="middle" font-size="9" class="label">Traffic Splitter</text>
-            <rect x="200" y="55" width="130" height="35" rx="8" fill="white" filter="url(#shadow)" class="box" />
-            <text x="265" y="77" text-anchor="middle" font-size="9" class="label">Variant Manager</text>
+        <!-- SECTION: A/B TESTING ENGINE -->
+        <rect
+          x="50"
+          y="20"
+          width="300"
+          height="75"
+          rx="15"
+          fill="#ecfeff"
+          stroke="#0891b2"
+          stroke-width="2"
+        />
+        <text x="70" y="42" class="label" fill="#0891b2">
+          A/B TESTING LAYER
+        </text>
+        <rect
+          x="70"
+          y="52"
+          width="130"
+          height="35"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="135" y="74" text-anchor="middle" class="label-sm">
+          Traffic Splitter
+        </text>
+        <rect
+          x="210"
+          y="52"
+          width="130"
+          height="35"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="275" y="74" text-anchor="middle" class="label-sm">
+          Variant Manager
+        </text>
 
-            <!-- SECTION: PROMOTIONS & MARKETING -->
-            <rect x="370" y="20" width="280" height="80" rx="15" fill="#f0fdf4" stroke="#10b981" stroke-width="2" />
-            <text x="385" y="45" class="label" fill="#10b981">MARKETING & PROMOTIONS</text>
-            <rect x="385" y="55" width="120" height="35" rx="8" fill="white" filter="url(#shadow)" class="box" />
-            <text x="445" y="77" text-anchor="middle" font-size="9" class="label">Coupon Engine</text>
-            <rect x="515" y="55" width="120" height="35" rx="8" fill="white" filter="url(#shadow)" class="box" />
-            <text x="575" y="77" text-anchor="middle" font-size="9" class="label">Upsell / Cross-sell</text>
+        <!-- SECTION: PROMOTIONS & MARKETING -->
+        <rect
+          x="370"
+          y="20"
+          width="280"
+          height="75"
+          rx="15"
+          fill="#f0fdf4"
+          stroke="#10b981"
+          stroke-width="2"
+        />
+        <text x="385" y="42" class="label" fill="#10b981">
+          MARKETING & PROMOTIONS
+        </text>
+        <rect
+          x="385"
+          y="52"
+          width="125"
+          height="35"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="447" y="74" text-anchor="middle" class="label-sm">
+          Coupon Engine
+        </text>
+        <rect
+          x="520"
+          y="52"
+          width="125"
+          height="35"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="582" y="74" text-anchor="middle" class="label-sm">
+          Upsell / Cross-sell
+        </text>
 
-            <!-- SECTION: REVIEW & SOCIAL PROOF -->
-            <rect x="680" y="20" width="220" height="150" rx="15" fill="#fffbeb" stroke="#f59e0b" stroke-width="2" />
-            <text x="695" y="45" class="label" fill="#f59e0b">REVIEWS & SOCIAL PROOF</text>
-            <rect x="700" y="60" width="180" height="40" rx="8" fill="white" filter="url(#shadow)" class="box" />
-            <text x="790" y="85" text-anchor="middle" class="label">Review Widget</text>
-            <rect x="700" y="110" width="180" height="40" rx="8" fill="white" filter="url(#shadow)" class="box" />
-            <text x="790" y="135" text-anchor="middle" class="label">Photo/Video UGC</text>
+        <!-- SECTION: REVIEW & SOCIAL PROOF -->
+        <rect
+          x="680"
+          y="20"
+          width="280"
+          height="120"
+          rx="15"
+          fill="#fffbeb"
+          stroke="#f59e0b"
+          stroke-width="2"
+        />
+        <text x="695" y="42" class="label" fill="#f59e0b">
+          REVIEWS & SOCIAL PROOF
+        </text>
+        <rect
+          x="700"
+          y="52"
+          width="240"
+          height="35"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="820" y="74" text-anchor="middle" class="label-sm">
+          Review Widget
+        </text>
+        <rect
+          x="700"
+          y="95"
+          width="240"
+          height="35"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="820" y="117" text-anchor="middle" class="label-sm">
+          Photo/Video UGC
+        </text>
 
-            <!-- SECTION: PRODUCT PERSONALIZER + AI TOOLS -->
-            <rect x="50" y="140" width="600" height="170" rx="15" fill="#fdf2f8" stroke="#db2777" stroke-width="2" />
-            <text x="70" y="165" class="label" fill="#db2777">PRODUCT PERSONALIZER ENGINE (Enhanced with AI)</text>
-            
-            <rect x="70" y="180" width="170" height="50" rx="8" fill="white" filter="url(#shadow)" class="box" />
-            <text x="155" y="210" text-anchor="middle" class="label">Live Preview Canvas</text>
+        <!-- SECTION: PRODUCT PERSONALIZER + AI TOOLS -->
+        <rect
+          x="50"
+          y="120"
+          width="600"
+          height="150"
+          rx="15"
+          fill="#fdf2f8"
+          stroke="#db2777"
+          stroke-width="2"
+        />
+        <text x="70" y="145" class="label" fill="#db2777">
+          PRODUCT PERSONALIZER ENGINE (Enhanced with AI)
+        </text>
 
-            <rect x="255" y="180" width="170" height="50" rx="8" fill="white" filter="url(#shadow)" class="box" />
-            <text x="340" y="210" text-anchor="middle" class="label">ClipArt & Font Lib</text>
+        <rect
+          x="70"
+          y="160"
+          width="175"
+          height="35"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="157" y="182" text-anchor="middle" class="label-sm">
+          Live Preview Canvas
+        </text>
 
-            <rect x="440" y="180" width="180" height="50" rx="8" fill="white" filter="url(#shadow)" class="box" />
-            <text x="530" y="210" text-anchor="middle" class="label">Print-Ready Generator</text>
+        <rect
+          x="255"
+          y="160"
+          width="175"
+          height="35"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="342" y="182" text-anchor="middle" class="label-sm">
+          ClipArt & Font Lib
+        </text>
 
-            <!-- NEW: AI SERVICES BOX -->
-            <rect x="70" y="245" width="550" height="50" rx="10" fill="#eef2ff" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="4" />
-            <text x="85" y="262" class="label" fill="#4f46e5" font-size="9">AI TOOLS</text>
-            
-            <rect x="180" y="255" width="140" height="30" rx="5" fill="white" filter="url(#shadow)" class="box" />
-            <text x="250" y="274" text-anchor="middle" font-size="9" font-weight="bold">AI Bg Remover</text>
-            
-            <rect x="330" y="255" width="140" height="30" rx="5" fill="white" filter="url(#shadow)" class="box" />
-            <text x="400" y="274" text-anchor="middle" font-size="9" font-weight="bold">Face Detection</text>
+        <rect
+          x="440"
+          y="160"
+          width="190"
+          height="35"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="535" y="182" text-anchor="middle" class="label-sm">
+          Print-Ready Generator
+        </text>
 
-            <rect x="480" y="255" width="130" height="30" rx="5" fill="white" filter="url(#shadow)" class="box" />
-            <text x="545" y="274" text-anchor="middle" font-size="9" font-weight="bold">Auto-Scale Up</text>
+        <!-- AI SERVICES BOX -->
+        <rect
+          x="70"
+          y="210"
+          width="550"
+          height="50"
+          rx="10"
+          fill="#eef2ff"
+          stroke="#6366f1"
+          stroke-width="1.5"
+          stroke-dasharray="4"
+        />
+        <text x="85" y="230" class="label" fill="#4f46e5" font-size="9">
+          AI TOOLS
+        </text>
+        <rect
+          x="170"
+          y="220"
+          width="130"
+          height="35"
+          rx="6"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="235" y="242" text-anchor="middle" class="label-sm">
+          AI Bg Remover
+        </text>
+        <rect
+          x="310"
+          y="220"
+          width="130"
+          height="35"
+          rx="6"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="375" y="242" text-anchor="middle" class="label-sm">
+          Face Detection
+        </text>
+        <rect
+          x="450"
+          y="220"
+          width="130"
+          height="35"
+          rx="6"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="515" y="242" text-anchor="middle" class="label-sm">
+          Auto-Scale Up
+        </text>
 
-            <!-- SECTION 1: FRONTEND LAYER -->
-            <rect x="50" y="340" width="600" height="150" rx="15" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" stroke-dasharray="5,5" />
-            <text x="60" y="365" class="label" fill="#3b82f6">FRONTEND LAYER (Next.js)</text>
-            
-            <rect x="80" y="390" width="180" height="70" rx="10" fill="white" filter="url(#shadow)" class="box" />
-            <text x="170" y="420" text-anchor="middle" class="label">Customizer Interface</text>
+        <!-- SECTION 1: FRONTEND LAYER -->
+        <rect
+          x="50"
+          y="295"
+          width="600"
+          height="100"
+          rx="15"
+          fill="#eff6ff"
+          stroke="#3b82f6"
+          stroke-width="2"
+          stroke-dasharray="5,5"
+        />
+        <text x="60" y="318" class="label" fill="#3b82f6">
+          FRONTEND LAYER (Next.js)
+        </text>
+        <rect
+          x="80"
+          y="335"
+          width="200"
+          height="35"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="180" y="357" text-anchor="middle" class="label-sm">
+          Customizer Interface
+        </text>
+        <rect
+          x="310"
+          y="335"
+          width="200"
+          height="35"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="410" y="357" text-anchor="middle" class="label-sm">
+          Smart Cart
+        </text>
 
-            <rect x="300" y="390" width="180" height="70" rx="10" fill="white" filter="url(#shadow)" class="box" />
-            <text x="390" y="420" text-anchor="middle" class="label">Smart Cart</text>
+        <!-- SECTION: HYBRID TRACKING LAYER -->
+        <rect
+          x="680"
+          y="295"
+          width="280"
+          height="360"
+          rx="15"
+          fill="#faf5ff"
+          stroke="#a855f7"
+          stroke-width="2"
+        />
+        <text x="695" y="318" class="label" fill="#a855f7">
+          HYBRID TRACKING LAYER
+        </text>
 
-            <!-- SECTION: HYBRID TRACKING LAYER -->
-            <rect x="680" y="340" width="280" height="420" rx="15" fill="#faf5ff" stroke="#a855f7" stroke-width="2" />
-            <text x="695" y="365" class="label" fill="#a855f7">HYBRID TRACKING LAYER</text>
-            
-            <rect x="695" y="385" width="250" height="120" rx="10" fill="white" stroke="#c084fc" stroke-dasharray="3" />
-            <text x="705" y="405" font-size="9" font-weight="bold" fill="#7e22ce">1. CLIENT-SIDE (Browser)</text>
-            <rect x="705" y="415" width="230" height="35" rx="5" fill="#f5f3ff" />
-            <text x="820" y="437" text-anchor="middle" font-size="9" class="label">GTM Web Container</text>
-            <rect x="705" y="460" width="230" height="35" rx="5" fill="#f5f3ff" />
-            <text x="820" y="482" text-anchor="middle" font-size="9" class="label">FB Pixel / GA4 Tag</text>
+        <rect
+          x="695"
+          y="335"
+          width="250"
+          height="120"
+          rx="10"
+          fill="white"
+          stroke="#c084fc"
+          stroke-dasharray="3"
+        />
+        <text x="705" y="355" font-size="9" font-weight="bold" fill="#7e22ce">
+          1. CLIENT-SIDE (Browser)
+        </text>
+        <rect x="705" y="365" width="230" height="35" rx="6" fill="#f5f3ff" />
+        <text x="820" y="387" text-anchor="middle" class="label-sm">
+          GTM Web Container
+        </text>
+        <rect x="705" y="410" width="230" height="35" rx="6" fill="#f5f3ff" />
+        <text x="820" y="432" text-anchor="middle" class="label-sm">
+          FB Pixel / GA4 Tag
+        </text>
 
-            <rect x="695" y="520" width="250" height="220" rx="10" fill="#fdfaff" stroke="#a855f7" />
-            <text x="705" y="540" font-size="9" font-weight="bold" fill="#7e22ce">2. SERVER-SIDE (CAPI)</text>
-            <rect x="705" y="555" width="230" height="45" rx="5" fill="white" filter="url(#shadow)" />
-            <text x="820" y="575" text-anchor="middle" font-size="9" class="label">GTM Server Container</text>
-            
-            <rect x="705" y="615" width="230" height="45" rx="5" fill="white" filter="url(#shadow)" />
-            <text x="820" y="635" text-anchor="middle" font-size="9" class="label">Facebook CAPI</text>
+        <rect
+          x="695"
+          y="470"
+          width="250"
+          height="170"
+          rx="10"
+          fill="#fdfaff"
+          stroke="#a855f7"
+        />
+        <text x="705" y="490" font-size="9" font-weight="bold" fill="#7e22ce">
+          2. SERVER-SIDE (CAPI)
+        </text>
+        <rect
+          x="705"
+          y="500"
+          width="230"
+          height="35"
+          rx="6"
+          fill="white"
+          filter="url(#shadow)"
+        />
+        <text x="820" y="522" text-anchor="middle" class="label-sm">
+          GTM Server Container
+        </text>
+        <rect
+          x="705"
+          y="545"
+          width="230"
+          height="35"
+          rx="6"
+          fill="white"
+          filter="url(#shadow)"
+        />
+        <text x="820" y="567" text-anchor="middle" class="label-sm">
+          Facebook CAPI
+        </text>
+        <rect
+          x="705"
+          y="590"
+          width="230"
+          height="35"
+          rx="6"
+          fill="white"
+          filter="url(#shadow)"
+        />
+        <text x="820" y="612" text-anchor="middle" class="label-sm">
+          Mixpanel / Data Warehouse
+        </text>
 
-            <rect x="705" y="675" width="230" height="45" rx="5" fill="white" filter="url(#shadow)" />
-            <text x="820" y="695" text-anchor="middle" font-size="9" class="label">Mixpanel / Data Warehouse</text>
+        <!-- Connections -->
+        <path d="M510 95 L510 295" class="promo-connector" />
+        <path d="M340 270 L340 295" class="design-connector" />
+        <path d="M600 380 L695 380" class="tracking-connector" />
+        <path d="M600 560 L695 560" class="tracking-connector" />
 
-            <!-- Connections -->
-            <path d="M510 100 L510 340" class="promo-connector" />
-            <path d="M340 310 L340 340" class="design-connector" />
-            <path d="M600 420 L695 420" class="tracking-connector" />
-            <path d="M600 640 L695 640" class="tracking-connector" />
+        <!-- SECTION 2: BACKEND ENGINE -->
+        <path d="M180 395 L180 420" class="connector" />
+        <path d="M410 395 L410 420" class="connector" />
 
-            <!-- SECTION 2: BACKEND ENGINE -->
-            <path d="M170 490 L170 550" class="connector" />
-            <path d="M390 490 L390 550" class="connector" />
+        <rect
+          x="50"
+          y="430"
+          width="600"
+          height="230"
+          rx="15"
+          fill="#f0fdf4"
+          stroke="#22c55e"
+          stroke-width="2"
+        />
+        <text x="60" y="455" class="label" fill="#22c55e">
+          SHOPIFY BACKEND ENGINE
+        </text>
 
-            <rect x="50" y="560" width="600" height="240" rx="15" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" />
-            <text x="60" y="585" class="label" fill="#22c55e">SHOPIFY BACKEND ENGINE</text>
+        <rect
+          x="80"
+          y="475"
+          width="175"
+          height="35"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+        />
+        <text x="167" y="497" text-anchor="middle" class="label-sm">
+          Storefront API
+        </text>
+        <rect
+          x="270"
+          y="475"
+          width="175"
+          height="35"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+        />
+        <text x="357" y="497" text-anchor="middle" class="label-sm">
+          Discount Logic
+        </text>
+        <rect
+          x="460"
+          y="475"
+          width="175"
+          height="35"
+          rx="8"
+          fill="#ecfdf5"
+          stroke="#10b981"
+          filter="url(#shadow)"
+        />
+        <text x="547" y="497" text-anchor="middle" class="label-sm">
+          Orders & Print Assets
+        </text>
 
-            <rect x="80" y="610" width="170" height="60" rx="8" fill="white" filter="url(#shadow)" />
-            <text x="165" y="645" text-anchor="middle" class="label">Storefront API</text>
-            
-            <rect x="270" y="610" width="170" height="60" rx="8" fill="white" filter="url(#shadow)" />
-            <text x="355" y="635" text-anchor="middle" class="label">Discount Logic</text>
+        <!-- SECTION: POST-PURCHASE & LOYALTY -->
+        <rect
+          x="80"
+          y="540"
+          width="550"
+          height="100"
+          rx="10"
+          fill="#f0f9ff"
+          stroke="#0ea5e9"
+          stroke-width="1.5"
+        />
+        <text x="95" y="565" class="label" fill="#0369a1">
+          POST-PURCHASE & LOYALTY MODULE
+        </text>
+        <rect
+          x="100"
+          y="580"
+          width="165"
+          height="35"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="182" y="602" text-anchor="middle" class="label-sm">
+          Loyalty Points
+        </text>
+        <rect
+          x="280"
+          y="580"
+          width="165"
+          height="35"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="362" y="602" text-anchor="middle" class="label-sm">
+          Post-Purchase Upsell
+        </text>
+        <rect
+          x="460"
+          y="580"
+          width="165"
+          height="35"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="542" y="602" text-anchor="middle" class="label-sm">
+          Referral Program
+        </text>
 
-            <rect x="460" y="610" width="170" height="60" rx="8" fill="#ecfdf5" stroke="#10b981" filter="url(#shadow)" />
-            <text x="545" y="645" text-anchor="middle" class="label">Orders & Print Assets</text>
+        <!-- SECTION: POD MIDDLEWARE / ORCHESTRATION CORE -->
+        <path d="M355 660 L355 700" class="connector" />
 
-            <!-- SECTION: POST-PURCHASE & LOYALTY -->
-            <rect x="80" y="690" width="550" height="90" rx="10" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1.5" />
-            <text x="95" y="710" class="label" fill="#0369a1">POST-PURCHASE & LOYALTY MODULE</text>
-            <rect x="95" y="720" width="160" height="40" rx="8" fill="white" filter="url(#shadow)" class="box" />
-            <text x="175" y="745" text-anchor="middle" font-size="9" class="label">Loyalty Points</text>
-            <rect x="265" y="720" width="160" height="40" rx="8" fill="white" filter="url(#shadow)" class="box" />
-            <text x="345" y="745" text-anchor="middle" font-size="9" class="label">Post-Purchase Upsell</text>
-            <rect x="435" y="720" width="180" height="40" rx="8" fill="white" filter="url(#shadow)" class="box" />
-            <text x="525" y="745" text-anchor="middle" font-size="9" class="label">Referral Program</text>
+        <rect
+          x="50"
+          y="710"
+          width="910"
+          height="160"
+          rx="15"
+          fill="#fef2f2"
+          stroke="#dc2626"
+          stroke-width="2"
+        />
+        <text x="70" y="735" class="label" fill="#dc2626">
+          POD MIDDLEWARE / ORCHESTRATION CORE
+        </text>
 
-            <!-- SECTION 3: POD FULFILLMENT -->
-            <path d="M355 800 L355 860" class="connector" />
-            
-            <rect x="50" y="870" width="850" height="120" rx="15" fill="#fff7ed" stroke="#f97316" stroke-width="2" />
-            <text x="60" y="895" class="label" fill="#f97316">POD FULFILLMENT PARTNER (Automated Sync)</text>
+        <!-- Shopify Webhook Handler -->
+        <rect
+          x="120"
+          y="750"
+          width="210"
+          height="50"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="225" y="772" text-anchor="middle" class="label-sm">
+          Shopify Webhook Handler
+        </text>
+        <text x="225" y="790" text-anchor="middle" class="subtitle">
+          (orders/paid, refunds)
+        </text>
 
-            <rect x="100" y="915" width="300" height="50" rx="8" fill="white" filter="url(#shadow)" />
-            <text x="250" y="945" text-anchor="middle" class="label">Automatic Ingestion of Designs</text>
+        <!-- Job Queue -->
+        <rect
+          x="350"
+          y="750"
+          width="210"
+          height="50"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="455" y="772" text-anchor="middle" class="label-sm">
+          Job Queue
+        </text>
+        <text x="455" y="790" text-anchor="middle" class="subtitle">
+          (BullMQ / SQS)
+        </text>
 
-            <rect x="550" y="915" width="300" height="50" rx="8" fill="white" filter="url(#shadow)" />
-            <text x="700" y="945" text-anchor="middle" class="label">Quality Check & Print</text>
+        <!-- Async Print Renderer -->
+        <rect
+          x="580"
+          y="750"
+          width="210"
+          height="50"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="685" y="772" text-anchor="middle" class="label-sm">
+          Async Print Renderer
+        </text>
+        <text x="685" y="790" text-anchor="middle" class="subtitle">
+          (300 DPI PDF / PNG)
+        </text>
 
-           
-        </svg>
+        <!-- Design & Asset Storage -->
+        <rect
+          x="350"
+          y="815"
+          width="210"
+          height="45"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+          class="box"
+        />
+        <text x="455" y="835" text-anchor="middle" class="label-sm">
+          Design & Asset Storage
+        </text>
+        <text x="455" y="851" text-anchor="middle" class="subtitle">
+          (S3 / R2 / GCS)
+        </text>
 
-        <section class="module-section">
-            <h2>1. A/B Testing Layer</h2>
-            <p><span class="purpose">Purpose:</span> To optimize conversion rates by testing different user experiences.</p>
-            <span class="components-title">Core Components:</span>
-            <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
-                <li><strong>Traffic Splitter:</strong> Distributes incoming traffic between different versions (A and B) of a page or feature.</li>
-                <li><strong>Variant Manager:</strong> Controls specific UI elements, such as different button colors, layouts, or pricing strategies, to determine which performs better.</li>
-            </ul>
-        </section>
+        <!-- SECTION 3: POD FULFILLMENT -->
+        <path d="M355 870 L355 900" class="connector" />
 
-        <section class="module-section">
-            <h2>2. Marketing & Promotions</h2>
-            <p><span class="purpose">Purpose:</span> To drive sales through psychological triggers and financial incentives.</p>
-            <span class="components-title">Core Components:</span>
-            <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
-                <li><strong>Coupon Engine:</strong> Manages dynamic and static discount codes that are applied at checkout.</li>
-                <li><strong>Upsell / Cross-sell:</strong> Suggests complementary products or upgrades (e.g., "Add a frame to your canvas") based on the current cart content.</li>
-            </ul>
-        </section>
+        <rect
+          x="50"
+          y="910"
+          width="910"
+          height="110"
+          rx="15"
+          fill="#fff7ed"
+          stroke="#f97316"
+          stroke-width="2"
+        />
+        <text x="60" y="935" class="label" fill="#f97316">
+          POD FULFILLMENT PARTNER (Automated Sync)
+        </text>
 
-        <section class="module-section">
-            <h2>3. Product Personalizer Engine (Teeinblue Style)</h2>
-            <p><span class="purpose">Purpose:</span> The core USP of the store, allowing customers to co-create their products.</p>
-            <span class="components-title">Core Components:</span>
-            <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
-                <li><strong>Live Preview Canvas:</strong> A real-time interactive area (built with Fabric.js/Konva.js) where users see their changes instantly on a product mockup.</li>
-                <li><strong>ClipArt & Font Library:</strong> A cloud-hosted repository of assets that users can choose from to decorate their designs.</li>
-                <li><strong>Print-Ready Generator:</strong> A server-side process that converts the user's browser-based JSON design into a high-resolution (300 DPI) PDF or PNG file for the printing machines.</li>
-            </ul>
-        </section>
+        <rect
+          x="100"
+          y="955"
+          width="380"
+          height="35"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+        />
+        <text x="290" y="977" text-anchor="middle" class="label-sm">
+          Automatic Ingestion of Designs
+        </text>
 
-        <section class="module-section">
-            <h2>4. AI Enhancement Tools</h2>
-            <p><span class="purpose">Purpose:</span> To automate complex design tasks and improve the quality of customer-uploaded content.</p>
-            <span class="components-title">Core Components:</span>
-            <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
-                <li><strong>AI Background Remover:</strong> Automatically strips backgrounds from user photos (e.g., removing the living room background from a pet photo).</li>
-                <li><strong>Face Detection:</strong> Ensures that faces are not cut off by the edges of the print area or obscured by other design elements.</li>
-                <li><strong>AI Resolution Upscaling:</strong> Uses neural networks to increase the pixel density of low-quality mobile photos, ensuring they don't look blurry when printed.</li>
-            </ul>
-        </section>
+        <rect
+          x="520"
+          y="955"
+          width="380"
+          height="35"
+          rx="8"
+          fill="white"
+          filter="url(#shadow)"
+        />
+        <text x="710" y="977" text-anchor="middle" class="label-sm">
+          Quality Check & Print
+        </text>
+      </svg>
 
-        <section class="module-section">
-            <h2>5. Frontend Layer (Next.js)</h2>
-            <p><span class="purpose">Purpose:</span> Provides a high-performance, SEO-friendly user interface.</p>
-            <span class="components-title">Core Components:</span>
-            <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
-                <li><strong>Customizer Interface:</strong> The React-based UI that wraps the Personalizer Engine, optimized for mobile touch gestures.</li>
-                <li><strong>Smart Cart:</strong> Handles complex metadata (like the design ID and personalization choices) before sending them to the Shopify checkout.</li>
-            </ul>
-        </section>
+      <section class="module-section">
+        <h2>1. A/B Testing Layer</h2>
+        <p>
+          <span class="purpose">Purpose:</span> To optimize conversion rates by
+          testing different user experiences.
+        </p>
+        <span class="components-title">Core Components:</span>
+        <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+          <li>
+            <strong>Traffic Splitter:</strong> Distributes incoming traffic
+            between different versions (A and B) of a page or feature.
+          </li>
+          <li>
+            <strong>Variant Manager:</strong> Controls specific UI elements,
+            such as different button colors, layouts, or pricing strategies, to
+            determine which performs better.
+          </li>
+        </ul>
+      </section>
 
-        <section class="module-section">
-            <h2>6. Hybrid Tracking Layer</h2>
-            <p><span class="purpose">Purpose:</span> Ensures 100% data accuracy for marketing attribution despite ad-blockers.</p>
-            <span class="components-title">Core Components:</span>
-            <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
-                <li><strong>Client-Side (GTM Web):</strong> Captures immediate user interactions like clicks and scrolls.</li>
-                <li><strong>Server-Side (CAPI):</strong> Sends purchase and lead data directly from the server to Facebook/Google, bypassing browser limitations and ITP (Intelligent Tracking Prevention).</li>
-            </ul>
-        </section>
+      <section class="module-section">
+        <h2>2. Marketing & Promotions</h2>
+        <p>
+          <span class="purpose">Purpose:</span> To drive sales through
+          psychological triggers and financial incentives.
+        </p>
+        <span class="components-title">Core Components:</span>
+        <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+          <li>
+            <strong>Coupon Engine:</strong> Manages dynamic and static discount
+            codes that are applied at checkout.
+          </li>
+          <li>
+            <strong>Upsell / Cross-sell:</strong> Suggests complementary
+            products or upgrades (e.g., "Add a frame to your canvas") based on
+            the current cart content.
+          </li>
+        </ul>
+      </section>
 
-        <section class="module-section">
-            <h2>7. Shopify Backend Engine</h2>
-            <p><span class="purpose">Purpose:</span> Acts as the "Brain" for commerce logic and data persistence.</p>
-            <span class="components-title">Core Components:</span>
-            <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
-                <li><strong>Storefront API:</strong> The GraphQL gateway that allows the Next.js frontend to fetch product data.</li>
-                <li><strong>Discount Logic:</strong> Validates and applies complex promotional rules.</li>
-                <li><strong>Orders & Print Assets:</strong> Stores the final order details and links the high-resolution print files to the specific order for the fulfillment team.</li>
-            </ul>
-        </section>
+      <section class="module-section">
+        <h2>3. Product Personalizer Engine (Teeinblue Style)</h2>
+        <p>
+          <span class="purpose">Purpose:</span> The core USP of the store,
+          allowing customers to co-create their products.
+        </p>
+        <span class="components-title">Core Components:</span>
+        <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+          <li>
+            <strong>Live Preview Canvas:</strong> A real-time interactive area
+            (built with Fabric.js/Konva.js) where users see their changes
+            instantly on a product mockup.
+          </li>
+          <li>
+            <strong>ClipArt & Font Library:</strong> A cloud-hosted repository
+            of assets that users can choose from to decorate their designs.
+          </li>
+          <li>
+            <strong>Print-Ready Generator:</strong> A server-side process that
+            converts the user's browser-based JSON design into a high-resolution
+            (300 DPI) PDF or PNG file for the printing machines.
+          </li>
+        </ul>
+      </section>
 
-        <section class="module-section">
-            <h2>8. Post-Purchase & Loyalty</h2>
-            <p><span class="purpose">Purpose:</span> To increase Customer Lifetime Value (LTV) and encourage repeat purchases.</p>
-            <span class="components-title">Core Components:</span>
-            <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
-                <li><strong>Loyalty Points:</strong> Rewards users for purchases, referrals, or social media engagement.</li>
-                <li><strong>Referral Program:</strong> Incentivizes existing customers to bring in new buyers via unique trackable links.</li>
-            </ul>
-        </section>
+      <section class="module-section">
+        <h2>4. AI Enhancement Tools</h2>
+        <p>
+          <span class="purpose">Purpose:</span> To automate complex design tasks
+          and improve the quality of customer-uploaded content.
+        </p>
+        <span class="components-title">Core Components:</span>
+        <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+          <li>
+            <strong>AI Background Remover:</strong> Automatically strips
+            backgrounds from user photos (e.g., removing the living room
+            background from a pet photo).
+          </li>
+          <li>
+            <strong>Face Detection:</strong> Ensures that faces are not cut off
+            by the edges of the print area or obscured by other design elements.
+          </li>
+          <li>
+            <strong>AI Resolution Upscaling:</strong> Uses neural networks to
+            increase the pixel density of low-quality mobile photos, ensuring
+            they don't look blurry when printed.
+          </li>
+        </ul>
+      </section>
 
-        <section class="module-section">
-            <h2>9. POD Fulfillment Partner</h2>
-            <p><span class="purpose">Purpose:</span> Physical production and global shipping.</p>
-            <span class="components-title">Core Components:</span>
-            <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
-                <li><strong>Automatic Ingestion:</strong> Automatically pulls the "Print-Ready" file from your server as soon as an order is paid.</li>
-                <li><strong>Quality Check & Print:</strong> Final manual/automated inspection before the product is physically printed and shipped to the customer.</li>
-            </ul>
-        </section>
+      <section class="module-section">
+        <h2>5. Frontend Layer (Next.js)</h2>
+        <p>
+          <span class="purpose">Purpose:</span> Provides a high-performance,
+          SEO-friendly user interface.
+        </p>
+        <span class="components-title">Core Components:</span>
+        <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+          <li>
+            <strong>Customizer Interface:</strong> The React-based UI that wraps
+            the Personalizer Engine, optimized for mobile touch gestures.
+          </li>
+          <li>
+            <strong>Smart Cart:</strong> Handles complex metadata (like the
+            design ID and personalization choices) before sending them to the
+            Shopify checkout.
+          </li>
+        </ul>
+      </section>
+
+      <section class="module-section">
+        <h2>6. Hybrid Tracking Layer</h2>
+        <p>
+          <span class="purpose">Purpose:</span> Ensures 100% data accuracy for
+          marketing attribution despite ad-blockers.
+        </p>
+        <span class="components-title">Core Components:</span>
+        <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+          <li>
+            <strong>Client-Side (GTM Web):</strong> Captures immediate user
+            interactions like clicks and scrolls.
+          </li>
+          <li>
+            <strong>Server-Side (CAPI):</strong> Sends purchase and lead data
+            directly from the server to Facebook/Google, bypassing browser
+            limitations and ITP (Intelligent Tracking Prevention).
+          </li>
+        </ul>
+      </section>
+
+      <section class="module-section">
+        <h2>7. Shopify Backend Engine</h2>
+        <p>
+          <span class="purpose">Purpose:</span> Acts as the "Brain" for commerce
+          logic and data persistence.
+        </p>
+        <span class="components-title">Core Components:</span>
+        <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+          <li>
+            <strong>Storefront API:</strong> The GraphQL gateway that allows the
+            Next.js frontend to fetch product data.
+          </li>
+          <li>
+            <strong>Discount Logic:</strong> Validates and applies complex
+            promotional rules.
+          </li>
+          <li>
+            <strong>Orders & Print Assets:</strong> Stores the final order
+            details and links the high-resolution print files to the specific
+            order for the fulfillment team.
+          </li>
+        </ul>
+      </section>
+
+      <section class="module-section">
+        <h2>8. Post-Purchase & Loyalty</h2>
+        <p>
+          <span class="purpose">Purpose:</span> To increase Customer Lifetime
+          Value (LTV) and encourage repeat purchases.
+        </p>
+        <span class="components-title">Core Components:</span>
+        <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+          <li>
+            <strong>Loyalty Points:</strong> Rewards users for purchases,
+            referrals, or social media engagement.
+          </li>
+          <li>
+            <strong>Referral Program:</strong> Incentivizes existing customers
+            to bring in new buyers via unique trackable links.
+          </li>
+        </ul>
+      </section>
+
+      <section class="module-section">
+        <h2>9. POD Middleware / Orchestration Core</h2>
+        <p>
+          <span class="purpose">Purpose:</span> Central orchestration layer that
+          connects the storefront to the print fulfillment workflow.
+        </p>
+        <span class="components-title">Core Components:</span>
+        <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+          <li>
+            <strong>Shopify Webhook Handler:</strong> Receives real-time order
+            events (orders/paid, refunds) from Shopify to trigger downstream
+            processes.
+          </li>
+          <li>
+            <strong>Job Queue:</strong> Manages asynchronous tasks using BullMQ
+            or AWS SQS for reliable, scalable background processing.
+          </li>
+          <li>
+            <strong>Async Print Renderer:</strong> Generates high-resolution
+            print-ready files (300 DPI PDF/PNG) in the background.
+          </li>
+          <li>
+            <strong>Design & Asset Storage:</strong> Cloud storage (S3, R2, or
+            GCS) for design files, mockups, and print assets.
+          </li>
+        </ul>
+      </section>
+
+      <section class="module-section">
+        <h2>10. POD Fulfillment Partner</h2>
+        <p>
+          <span class="purpose">Purpose:</span> Physical production and global
+          shipping.
+        </p>
+        <span class="components-title">Core Components:</span>
+        <ul class="block list-[square] ml-8 mt-2 space-y-2 text-gray-700">
+          <li>
+            <strong>Automatic Ingestion:</strong> Automatically pulls the
+            "Print-Ready" file from your server as soon as an order is paid.
+          </li>
+          <li>
+            <strong>Quality Check & Print:</strong> Final manual/automated
+            inspection before the product is physically printed and shipped to
+            the customer.
+          </li>
+        </ul>
+      </section>
     </div>
-</body>
+  </body>
 </html>
